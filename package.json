@@ -1,0 +1,26 @@
+{
+  "name": "rollup-plugin-reloadsite",
+  "version": "1.0.0",
+  "description": "A rollup plugin that adds HMR features via livereload",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rollup",
+    "hmr",
+    "realtime",
+    "live",
+    "reloading",
+    "css",
+    "images"
+  ],
+  "author": "Anthony Mugendi <ngurumugz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "magic-string": "^0.30.5",
+    "picomatch": "^3.0.1",
+    "reloadsite": "^1.0.5",
+    "tcp-port-used": "^1.0.2"
+  }
+}
