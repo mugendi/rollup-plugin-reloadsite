@@ -12,7 +12,7 @@ const reloadSite = require('reloadsite');
 const tcpPortUsed = require('tcp-port-used');
 
 let scriptJSStr = fs.readFileSync(
-  path.join(__dirname, './plugn-append-script.js'),
+  path.join(__dirname, './src/plugn-append-script.js'),
   'utf8'
 );
 
@@ -20,11 +20,11 @@ const production = !process.env.ROLLUP_WATCH;
 
 const ReloadSite = (options = {}) => {
   let {
+    dirs = [],
     sourcemap = true,
     filter = null,
     port = 35729,
     hook = 'buildEnd',
-    dirs = [],
   } = options;
   //   console.log(options);
   return {
@@ -32,6 +32,8 @@ const ReloadSite = (options = {}) => {
     transform: (source, id) => {
       // do not run in production
       if (production) return;
+      // ensure js file
+      if(!id.endsWith('.js')) return
       dirs = arrify(dirs);
       // nothing to do here....
       if (dirs.length == 0) return;
@@ -60,7 +62,7 @@ const ReloadSite = (options = {}) => {
 
         const portUsed = await tcpPortUsed.check(port, '127.0.0.1');
         if (!portUsed) {
-          startLiveReloadServer({ port, dirs });
+          startReloadSiteServer({ port, dirs });
         }
       } catch (error) {
         throw error;
@@ -69,7 +71,7 @@ const ReloadSite = (options = {}) => {
   };
 };
 
-async function startLiveReloadServer({ port, delay = 250, dirs = [] }) {
+async function startReloadSiteServer({ port, delay = 250, dirs = [] }) {
   // start server
   const serverOptions = { port };
   const reloader = reloadSite(serverOptions);
