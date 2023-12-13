@@ -12,7 +12,7 @@ const reloadSite = require('reloadsite');
 const tcpPortUsed = require('tcp-port-used');
 
 let scriptJSStr = fs.readFileSync(
-  path.join(__dirname, './src/plugn-append-script.js'),
+  path.join(__dirname, './src/plugin-append-script.js'),
   'utf8'
 );
 
