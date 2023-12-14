@@ -211,10 +211,10 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-reloadsite@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/reloadsite/-/reloadsite-1.0.6.tgz#7e7167db7085bd6ab1e25132e6c3908e9b069179"
-  integrity sha512-GBDpgMZmEdk+qHachb52dSrfrhzqlAQhIxZTZwrzBP2lvxsomxQI+GyleeOA8jRiZrviTQ7Cc7EQzXIsMLJPmg==
+reloadsite@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/reloadsite/-/reloadsite-1.0.7.tgz#086585998d776668968bbcc1398005b2c7f585de"
+  integrity sha512-BpgGHSNiu3N5UMNC/V2jlolQkIy35GSekKY/tuRp4zikS1uz+KYuza/R2+f22mQQ+e4hNZovfi9nBthz3RI0Ow==
   dependencies:
     chokidar "^3.5.2"
     debug-symbols "^1.0.2"

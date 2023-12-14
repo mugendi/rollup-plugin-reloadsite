@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-reloadsite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A rollup plugin that adds HMR support via ReloadSite",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "dependencies": {
     "magic-string": "^0.30.5",
     "picomatch": "^3.0.1",
-    "reloadsite": "^1.0.6",
+    "reloadsite": "^1.0.7",
     "tcp-port-used": "^1.0.2"
   }
 }
