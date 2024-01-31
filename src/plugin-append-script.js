@@ -9,19 +9,21 @@
  */
 
 // see if script tag exists
-let scrptExists = document.querySelector('script#ReloadSite');
+(function () {
+  let scriptExists = document.querySelector('script#ReloadSite');
 
-if (!scrptExists) {
-  // get document body
-  let body = document.querySelector('body,html');
+  if (!scriptExists) {
+    // get document body
+    let body = document.querySelector('body,html');
 
-  if (body) {
-    // create tag
-    let tag = document.createElement('script');
-    tag.src = 'http://127.0.0.1:{PORT}/reloadsite.js';
-    tag.id = 'ReloadSite';
-    body.append(tag);
-  } else {
-    console.warn('HTML document has no body or html tag!');
+    if (body) {
+      // create tag
+      let tag = document.createElement('script');
+      tag.src = 'http://127.0.0.1:{PORT}/reloadsite.js';
+      tag.id = 'ReloadSite';
+      body.append(tag);
+    } else {
+      console.warn('HTML document has no body or html tag!');
+    }
   }
-}
+})();
