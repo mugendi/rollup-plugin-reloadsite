@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-reloadsite",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A rollup plugin that adds HMR support via ReloadSite",
   "main": "index.js",
   "scripts": {
