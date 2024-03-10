@@ -26,6 +26,7 @@ const ReloadSite = (options = {}) => {
     name: 'reloadsite-plugin',
 
     async generateBundle(options, bundle, isWrite) {
+
       // start server
       try {
         // do not run in production
@@ -38,7 +39,7 @@ const ReloadSite = (options = {}) => {
             ? true
             : picomatch.isMatch(id, filter);
 
-          if (!fileMatchesFilter) return;
+          if (!fileMatchesFilter) continue;
 
 
           if (/.+\.[cm]?js$/.test(id)) {
@@ -49,13 +50,16 @@ const ReloadSite = (options = {}) => {
           }
         }
 
+
         // start server
         const portUsed = await tcpPortUsed.check(port, '127.0.0.1');
+
         // by using portUsed, we ensure we start server only once
         if (!portUsed) {
           startReloadSiteServer({ port, dirs, delay });
         }
       } catch (error) {
+        console.error(error);
         throw error;
       }
     },
