@@ -199,10 +199,10 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-reloadsite@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/reloadsite/-/reloadsite-1.0.8.tgz#2d1c2ec24994c736b52ca34f6a7cc9d17e3c898a"
-  integrity sha512-irkZvfxQ2RX1mGgRb0YbqJg9wMuXES8/34Di+Izy0a9hSJIunZl7dvGxXlodSajJTTxQFihSo2KTJh0lfQayhA==
+reloadsite@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/reloadsite/-/reloadsite-1.0.9.tgz#e0600af7406f7b1099d06df89378124b0b22be7f"
+  integrity sha512-Q+8dyDuMnhILfLGYqCd6CXbBRqzn/Upa3u5QXZiQCH2J2VGUi+5UWb/u/izihnjUzslIxodH6UGAoh6HkBNvsg==
   dependencies:
     chokidar "^3.5.2"
     debug-symbols "^1.0.2"
