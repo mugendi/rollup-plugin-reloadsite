@@ -21,12 +21,21 @@ module.exports = {
     hmr({
       // directories to watch
       dirs: ['./public'],
-      //the main file within which the hmr code is added
+
+      //Filtering helps determine the main bundle-file within which the hmr code is added. Otherwise it will be added to all files 
       // This is optional but highly recommended
+      // Default is null
       filter: '**/main.js',
+
       //  the port that ReloadSite uses
       // defaults tp 35729
       port: 35729,
+
+      // How long the server should wait before triggering hot reload
+      // This is important when you want to be sure that changes are fully written
+      // defaults to 1000
+      delay: 1000
+
     }),
   ],
 };
