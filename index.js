@@ -4,10 +4,9 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
-const MagicString = require('magic-string');
+
 const fs = require('fs');
 const path = require('path');
-const picomatch = require('picomatch');
 const reloadSite = require('reloadsite');
 const tcpPortUsed = require('tcp-port-used');
 
@@ -19,50 +18,33 @@ let scriptJSStr = fs.readFileSync(
 const production = !process.env.ROLLUP_WATCH;
 
 const ReloadSite = (options = {}) => {
-  let {
-    dirs = [],
-    sourcemap = true,
-    filter = null,
-    port = 35729,
-    hook = 'buildEnd',
-  } = options;
+  let { dirs = [], port = 35729, delay=1000 } = options;
+
   //   console.log(options);
   return {
     name: 'reloadsite-plugin',
-    transform: (source, id) => {
-      // do not run in production
-      if (production) return;
-      // ensure js file
-      if(!id.endsWith('.js')) return
-      dirs = arrify(dirs);
-      // nothing to do here....
-      if (dirs.length == 0) return;
 
-      //  use picomatch to filter files
-      let fileMatchesFilter = !filter ? true : picomatch.isMatch(id, filter);
-
-      if (!fileMatchesFilter) return;
-
-      const s = new MagicString(source);
-
-      scriptJSStr = scriptJSStr.replace('{PORT}', port);
-
-      s.append(scriptJSStr);
-
-      return {
-        code: s.toString(),
-        map: sourcemap ? s.generateMap() : null,
-      };
-    },
-    [hook]: async () => {
+    async generateBundle(options, bundle, isWrite) {
       // start server
       try {
         // do not run in production
         if (production) return;
 
+        // add watcher script to js code
+        for (let id in bundle) {
+          if (/.+\.[cm]?js$/.test(id)) {
+            // Add script
+            scriptJSStr = scriptJSStr.replace('{PORT}', port);
+            bundle[id].code += '\n\n' + scriptJSStr;
+            scriptJSAdded = true;
+          }
+        }
+
+        // start server
         const portUsed = await tcpPortUsed.check(port, '127.0.0.1');
+        // by using portUsed, we ensure we start server only once
         if (!portUsed) {
-          startReloadSiteServer({ port, dirs });
+          startReloadSiteServer({ port, dirs, delay });
         }
       } catch (error) {
         throw error;
@@ -71,18 +53,13 @@ const ReloadSite = (options = {}) => {
   };
 };
 
-async function startReloadSiteServer({ port, delay = 250, dirs = [] }) {
+async function startReloadSiteServer({ port, delay =1000, dirs = [] }) {
   // start server
   const serverOptions = { port };
   const reloader = reloadSite(serverOptions);
   // start watching directories
-  const reloadOptions = { delay };
+  let reloadOptions = { delay };
   reloader.watch(dirs, reloadOptions);
-}
-
-function arrify(v) {
-  if (v === undefined) return [];
-  return Array.isArray(v) ? v : [v];
 }
 
 module.exports = ReloadSite;
