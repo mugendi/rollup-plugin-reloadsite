@@ -18,6 +18,7 @@
   "author": "Anthony Mugendi <ngurumugz@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "picomatch": "^4.0.1",
     "reloadsite": "^1.0.8",
     "tcp-port-used": "^1.0.2"
   }

@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const reloadSite = require('reloadsite');
 const tcpPortUsed = require('tcp-port-used');
+const picomatch = require('picomatch');
 
 let scriptJSStr = fs.readFileSync(
   path.join(__dirname, './src/plugin-append-script.js'),
@@ -18,7 +19,7 @@ let scriptJSStr = fs.readFileSync(
 const production = !process.env.ROLLUP_WATCH;
 
 const ReloadSite = (options = {}) => {
-  let { dirs = [], port = 35729, delay=1000 } = options;
+  let { dirs = [], port = 35729, delay = 1000, filter = null } = options;
 
   //   console.log(options);
   return {
@@ -32,6 +33,14 @@ const ReloadSite = (options = {}) => {
 
         // add watcher script to js code
         for (let id in bundle) {
+          //  use picomatch to filter files
+          let fileMatchesFilter = !filter
+            ? true
+            : picomatch.isMatch(id, filter);
+
+          if (!fileMatchesFilter) return;
+
+
           if (/.+\.[cm]?js$/.test(id)) {
             // Add script
             scriptJSStr = scriptJSStr.replace('{PORT}', port);
@@ -53,7 +62,7 @@ const ReloadSite = (options = {}) => {
   };
 };
 
-async function startReloadSiteServer({ port, delay =1000, dirs = [] }) {
+async function startReloadSiteServer({ port, delay = 1000, dirs = [] }) {
   // start server
   const serverOptions = { port };
   const reloader = reloadSite(serverOptions);
